@@ -12,7 +12,7 @@ public class UserInfo implements UserDetails {
     String name;
 
     public UserInfo(User user){
-        this.userName = user.getUsername();
+        this.userName = user.getUserName();
         this.password = user.getPassword();
         this.name = user.getName();
     }
