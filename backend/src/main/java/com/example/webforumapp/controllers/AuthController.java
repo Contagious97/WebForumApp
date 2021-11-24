@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.jsonwebtoken.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
@@ -32,6 +34,7 @@ public class AuthController {
         logger.info(user.toString());
         try {
             if (loginService.signin(user.getUserName(), user.getPassword())){
+
                 return new ResponseEntity<>("Successful login",HttpStatus.ACCEPTED);
             } else return new ResponseEntity<>("Unsuccessful login",HttpStatus.UNAUTHORIZED);
         } catch (Exception e){
