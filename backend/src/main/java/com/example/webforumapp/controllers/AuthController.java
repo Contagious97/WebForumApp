@@ -2,8 +2,11 @@ package com.example.webforumapp.controllers;
 
 
 import com.example.webforumapp.models.User;
+import com.example.webforumapp.models.replys.UserDetails;
 import com.example.webforumapp.models.requests.UserDetailsRequest;
 import com.example.webforumapp.services.LoginService;
+import com.google.gson.Gson;
+import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +37,14 @@ public class AuthController {
         logger.info(user.toString());
         try {
             if (loginService.signin(user.getUserName(), user.getPassword())){
-
-                return new ResponseEntity<>("Successful login",HttpStatus.ACCEPTED);
+                JSONObject resp = new JSONObject();
+                resp.put("username",user.getUserName());
+                resp.put("name",user.getName());
+                UserDetails userDetails = new UserDetails();
+                userDetails.setUserName(user.getUserName());
+                userDetails.setName(user.getName());
+                String userJson = new Gson().toJson(userDetails);
+                return new ResponseEntity<>(resp.toJSONString(),HttpStatus.ACCEPTED);
             } else return new ResponseEntity<>("Unsuccessful login",HttpStatus.UNAUTHORIZED);
         } catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
@@ -46,7 +55,7 @@ public class AuthController {
     public ResponseEntity<String> signup(@RequestBody UserDetailsRequest user){
         logger.info(user.toString());
         try {
-            if (loginService.signUp(user.getUserName(),user.getPassword(),user.getUserName()) != null){
+            if (loginService.signUp(user.getUserName(),user.getPassword(),user.getName()) != null){
                 return new ResponseEntity<>("User created",HttpStatus.ACCEPTED);
             } else return new ResponseEntity<>("User Not created",HttpStatus.UNAUTHORIZED);
         } catch (Exception e){
