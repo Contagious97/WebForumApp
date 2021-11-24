@@ -1,34 +1,39 @@
 import React, {Component} from "react";
+import {Form} from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import {Route, Switch} from "react-router-dom";
+import SignUp from "./signup.component";
+
 
 export default class Login extends Component {
     render() {
         return (
-            <form>
-                <h3>Sign In</h3>
+            <div className="auth-wrapper">
+                <div className="auth-inner">
+                    <Form>
+                        <h3>Sign In</h3>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control type="email" placeholder="Enter email"/>
+                            <Form.Text className="text-muted">
+                                We'll never share your email with anyone else.
+                            </Form.Text>
+                        </Form.Group>
 
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email"/>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" placeholder="Password"/>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                            <Form.Check type="checkbox" label="Remember me"/>
+                        </Form.Group>
+                        <Button variant="dark" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
                 </div>
+            </div>
 
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password"/>
-                </div>
-                <p>
-                <div className="form-group">
-                    <div className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" id="customCheck1"/>
-                            <label className="custom-control-label" htmlFor="customCheck1">&nbsp; Remember me</label>
-                    </div>
-                </div>
-                </p>
-                <div>
-                    <p>
-                        <button type="submit" className="btn btn-dark btn-block">Submit</button>
-                    </p>
-                </div>
-            </form>
         );
     }
 }

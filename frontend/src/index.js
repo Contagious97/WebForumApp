@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import "./index.css";
+import App from "./App";
+
 // import {BrowserRouter, Route, Router} from "react-router-dom";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 //import login from "login"
 import Routes from "./Routes";
 import Login from "./Components/login.component";
-import signup from "./SignUp/signup";
 import SignUp from "./Components/signup.component";
 
 ReactDOM.render(
