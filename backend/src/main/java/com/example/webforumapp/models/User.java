@@ -52,6 +52,9 @@ public class User {
     @OneToMany()
     private Set<Log> logs;
 
+    @OneToMany()
+    private Set<Message> messages;
+
     @Override
     public String toString(){
         return "userName: " + userName+"\n"+

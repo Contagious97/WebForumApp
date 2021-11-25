@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Container, Nav, Navbar} from "react-bootstrap";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import Login from "./Components/login.component";
 import SignUp from "./Components/signup.component";
@@ -13,8 +13,21 @@ import './App.css';
 
 import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
 
-function App() {
-    return (
+
+
+function App(){
+
+    const [user,setUser] = useState();
+
+    useEffect(()=>{
+        const lookup = localStorage.getItem('user');
+        if (lookup){
+            const foundUser = JSON.parse(lookup)
+            setUser(foundUser);
+        }
+    },[])
+
+    return (<Router>
         <div className="App">
             <Navbar className="navbar navbar-expand-lg navbar-light fixed-top" bg="dark" variant="dark">
                 <Container>
