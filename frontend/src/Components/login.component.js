@@ -26,7 +26,9 @@ export default class Login extends Component {
                 console.log("Result: " + result)
                 console.log("Result data: " + result.data)
                 console.log("Result data of data: " + result.data.username)
+                console.log("name: " + result.data.name)
                 localStorage.setItem('user',JSON.stringify(result.data));
+                this.props.history.push('/feed')
             }
         ).catch(function (error){
             if (error.response){

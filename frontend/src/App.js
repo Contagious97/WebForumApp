@@ -8,6 +8,7 @@ import React, {useEffect, useState} from "react";
 import Login from "./Components/login.component";
 import SignUp from "./Components/signup.component";
 import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
+import Feed from "./Components/feed.component";
 
 
 
@@ -20,6 +21,7 @@ function App(){
         if (lookup){
             const foundUser = JSON.parse(lookup)
             console.log(foundUser.username)
+            console.log(foundUser.name)
             setUser(foundUser);
             console.log()
         }
@@ -29,10 +31,11 @@ function App(){
         <div className="App">
         <Navbar className="navbar navbar-expand-lg navbar-light fixed-top" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand>Tumbler {user?user.name:0}</Navbar.Brand>
+                <Navbar.Brand>WebbForumApp {user?user.name:0}</Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/sign-up">Sign Up</Nav.Link>
+                    <Nav.Link href="/feed">Feed</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>
@@ -40,6 +43,7 @@ function App(){
                 <Route exact path='/' component={Login} />
                 <Route path="/sign-in" component={Login} />
                 <Route path="/sign-up" component={SignUp} />
+                <Route path="/feed" component={Feed}/>
             </Switch>
 
         </div>

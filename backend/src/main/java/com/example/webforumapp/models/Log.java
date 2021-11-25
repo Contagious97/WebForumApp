@@ -3,6 +3,8 @@ package com.example.webforumapp.models;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 public class Log {
@@ -13,7 +15,7 @@ public class Log {
     @Column
     private String content;
     @Column
-    private Date date;
+    private Timestamp date;
 
     @ManyToOne
     @JoinColumn()
@@ -35,11 +37,11 @@ public class Log {
         this.content = content;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
