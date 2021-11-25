@@ -33,6 +33,28 @@ h1,h2,h3,h4,h5,h6,label,span {
 .margin{
   margin-top:15px;
 }
+.space{
+  margin-bottom: 2px;
+  margin-top: 2px;
+
+
+}
+.topLeft{
+  margin-top: 10%;
+  margin-left: 100px;
+  text-align: left;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.smaller-box{
+  position: relative;
+  max-width: 64%;
+}
+
+.button-shape{
+  width: 300px;
+
+}
 
 .feedContainer{
   vertical-align: top;
