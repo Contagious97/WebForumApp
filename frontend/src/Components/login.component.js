@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import {LOGIN} from "../Constants/Constants";
-import {Route, Switch} from "react-router-dom";
-import SignUp from "./signup.component";
+
 
 export default class Login extends Component {
 
@@ -29,7 +28,11 @@ export default class Login extends Component {
                 console.log("Result data of data: " + result.data.username)
                 localStorage.setItem('user',JSON.stringify(result.data));
             }
-        )
+        ).catch(function (error){
+            if (error.response){
+                console.log(error.response.data)
+            }
+        })
         event.preventDefault();
     }
 

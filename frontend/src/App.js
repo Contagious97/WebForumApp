@@ -19,7 +19,9 @@ function App(){
         const lookup = localStorage.getItem('user');
         if (lookup){
             const foundUser = JSON.parse(lookup)
+            console.log(foundUser.username)
             setUser(foundUser);
+            console.log()
         }
     },[])
 
@@ -27,7 +29,7 @@ function App(){
         <div className="App">
         <Navbar className="navbar navbar-expand-lg navbar-light fixed-top" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand>Tumbler {}</Navbar.Brand>
+                <Navbar.Brand>Tumbler {user?user.name:0}</Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/sign-up">Sign Up</Nav.Link>
