@@ -13,11 +13,12 @@ import {LOGIN, LOGS} from "../Constants/Constants";
 import Logs from "./logs.component";
 import {useLocation, useParams} from "react-router-dom";
 
-export default class Feed extends Component {
 
+export default class Feed extends Component {
 
     constructor(props) {
         super(props);
+        console.log("props param: "+props.userParam)
         this.state = {username:'',name:'',content:''}
         this.componentDidMount = this.componentDidMount.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)

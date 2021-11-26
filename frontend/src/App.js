@@ -7,7 +7,7 @@ import React, {useEffect, useState} from "react";
 
 import Login from "./Components/login.component";
 import SignUp from "./Components/signup.component";
-import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
+import {Route, BrowserRouter as Router, Switch, useParams} from "react-router-dom";
 import Feed from "./Components/feed.component";
 
 
@@ -15,6 +15,11 @@ import Feed from "./Components/feed.component";
 function App(){
 
     const [user,setUser] = useState();
+
+    const {userParam} = useParams();
+    console.log("App: userparam"+ userParam)
+
+
 
     useEffect(()=>{
         const lookup = localStorage.getItem('user');
@@ -27,7 +32,7 @@ function App(){
         }
     },[])
 
-    return (<Router>
+    return (
         <div className="App">
         <Navbar className="navbar navbar-expand-lg navbar-light fixed-top" bg="dark" variant="dark">
             <Container>
@@ -43,11 +48,9 @@ function App(){
                 <Route exact path='/' component={Login} />
                 <Route path="/sign-in" component={Login} />
                 <Route path="/sign-up" component={SignUp} />
-                <Route path="/feed" component={Feed}/>
+                <Route path="/feed/:userParam" component={Feed} userParam={userParam}/>
             </Switch>
-
         </div>
-        </Router>
     );
 }
 

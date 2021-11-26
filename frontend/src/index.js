@@ -13,7 +13,9 @@ import SignUp from "./Components/signup.component";
 
 ReactDOM.render(
   <React.StrictMode>
-      <App/>
+      <Router>
+          <App/>
+      </Router>
       {/*<Router>*/}
       {/*    <Routes>*/}
       {/*        <Route path="/login" element= {<Login/>}/>*/}
