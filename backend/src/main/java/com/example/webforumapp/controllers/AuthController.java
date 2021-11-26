@@ -5,6 +5,7 @@ import com.example.webforumapp.models.User;
 import com.example.webforumapp.models.replys.UserDetails;
 import com.example.webforumapp.models.requests.UserDetailsRequest;
 import com.example.webforumapp.services.LoginService;
+import com.example.webforumapp.services.UserInfoService;
 import com.google.gson.Gson;
 import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
@@ -24,6 +25,9 @@ public class AuthController {
 
     @Autowired
     LoginService loginService;
+    @Autowired
+    UserInfoService userInfoService;
+
     Logger logger = LoggerFactory.getLogger(AuthController.class);
 
 
@@ -39,11 +43,13 @@ public class AuthController {
             if (loginService.signin(user.getUserName(), user.getPassword())){
                 JSONObject resp = new JSONObject();
                 resp.put("username",user.getUserName());
-                resp.put("name",user.getName());
+
+                resp.put("name",userInfoService.loadUserByUsername(user.getUserName()).getName());
                 UserDetails userDetails = new UserDetails();
                 userDetails.setUserName(user.getUserName());
                 userDetails.setName(user.getName());
                 String userJson = new Gson().toJson(userDetails);
+                logger.info(resp.toJSONString());
                 return new ResponseEntity<>(resp.toJSONString(),HttpStatus.ACCEPTED);
             } else return new ResponseEntity<>("Unsuccessful login",HttpStatus.UNAUTHORIZED);
         } catch (Exception e){

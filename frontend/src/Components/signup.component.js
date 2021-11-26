@@ -25,7 +25,7 @@ export default class SignUp extends Component {
         let a = axios.post(SIGNUP,axiosBody,
             axiosConfig).then(
             result => console.log(result)
-        )
+    )
         event.preventDefault();
     }
 

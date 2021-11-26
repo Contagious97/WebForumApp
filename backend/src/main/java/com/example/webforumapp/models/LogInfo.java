@@ -5,14 +5,21 @@ import java.sql.Date;
 public class LogInfo {
     private int id;
 
+    private String username;
+
     private String content;
 
-    private Date date;
+    private String date;
 
-    public LogInfo(int id, String content, Date date){
+    public LogInfo(int id, String username,String content, String date){
         this.id = id;
         this.content = content;
+        this.username = username;
         this.date = date;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public int getId() {
@@ -23,7 +30,7 @@ public class LogInfo {
         return content;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 }

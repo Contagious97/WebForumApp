@@ -11,4 +11,6 @@ import java.util.Set;
 public interface LogRepository extends JpaRepository<Log,Integer> {
 
     List<Log> getLogsByUser(User user);
+    List<Log> getLogsByUserOrderByDateDesc(User user);
+
 }
