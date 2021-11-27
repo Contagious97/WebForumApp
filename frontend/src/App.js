@@ -49,6 +49,8 @@ function App(){
                 <Route path="/sign-in" component={Login} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/feed/:userParam" component={Feed} userParam={userParam}/>
+                <Route path="/feed" component={Feed} loggedinUser={user}/>
+
             </Switch>
         </div>
     );

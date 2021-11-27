@@ -9,16 +9,17 @@ import {
     ToastContainer
 } from "react-bootstrap";
 import axios from "axios";
-import {LOGIN, LOGS} from "../Constants/Constants";
+import {USERS, LOGS} from "../Constants/Constants";
 import Logs from "./logs.component";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation, useParams, withRouter} from "react-router-dom";
 
 
-export default class Feed extends Component {
+class Feed extends Component {
 
     constructor(props) {
         super(props);
-        console.log("props param: "+props.userParam)
+        console.log("props param: "+this.props.userParam)
+        console.log(this.props)
         this.state = {username:'',name:'',content:''}
         this.componentDidMount = this.componentDidMount.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -26,13 +27,26 @@ export default class Feed extends Component {
 
     componentDidMount() {
         const user = localStorage.getItem('user');
-        if (user){
-            const foundUser = JSON.parse(user);
-            console.log("User: "+ foundUser.username)
-            this.setState(({username:foundUser.username,name:foundUser.name}),()=>
-            {console.log(this.state.name)
-            console.log(this.state.username)} )
+        const userParam = this.props.match.params.userParam;
+        console.log(userParam)
+        if (!userParam){
+            if (user){
+                const foundUser = JSON.parse(user);
+                console.log("User: "+ foundUser.username)
+                this.setState(({username:foundUser.username,name:foundUser.name}),()=>
+                {console.log(this.state.name)
+                    console.log(this.state.username)} )
+            }
+        } else {
+            let axiosConfig = {headers:{'Content-Type':'application/json'}}
+            axios.get(USERS+"/"+userParam,axiosConfig).then(result =>{
+                console.log(result)
+                this.setState(({username:result.data.userName,name:result.data.name}))
+            }).catch(function (error) {
+                console.log(error.response.data)
+            })
         }
+
 
 
     }
@@ -53,6 +67,7 @@ export default class Feed extends Component {
         ).catch(function (error){
             if (error.response){
                 console.log(error.response.data)
+                this.props.history.push('/feed')
             }
         })
         event.preventDefault();
@@ -80,9 +95,11 @@ export default class Feed extends Component {
 
                 </div>
 
-                <Logs/>
+                {console.log(this.state.username)}
+                <Logs props={this.state.username}/>
 
             </Container>
         );
     }
 }
+export default withRouter(Feed);

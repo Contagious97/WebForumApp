@@ -1,0 +1,27 @@
+version: '3'
+services:
+  database:
+    image: mysql:latest
+    environment:
+      MYSQL_DB: webforum
+      MYSQL_ROOT_PASSWORD: password123
+    ports:
+      - "3306:3306"
+  frontend:
+    image: webforum-frontend:latest
+    environment:
+      PORT: 3000
+      PROXY_API: http://backend:8080
+    ports:
+      - "3000:3000"
+    stdin_open: true
+  backend:
+    image: webforum-backend:latest
+    environment:
+      MYSQL_DB: jdbc:mysql://database:3306/webforum
+      MYSQL_DB_USER: root
+      MYSQL_DB_PASSWORD: password123
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database

@@ -9,18 +9,25 @@ export default class Logs extends Component{
 
 
     constructor(props) {
-        console.log("props" + props.name)
         super(props);
+        console.log("props" + props.props)
+
         const user = localStorage.getItem('user');
-        let username;
-        if (user){
-            const foundUser = JSON.parse(user);
-            console.log("User: "+ foundUser.username)
-            username = foundUser.username;
+        let username = props.props;
+        console.log(username)
+        if (!username){
+            if (user){
+                const foundUser = JSON.parse(user);
+                console.log("User: "+ foundUser.username)
+                username = foundUser.username;
+            }
         }
+
+
 
         this.state ={logs: [],username:username}
         this.componentDidMount = this.componentDidMount.bind(this)
+        this.updateData = this.updateData.bind(this)
     }
 
     componentDidMount() {
@@ -39,7 +46,10 @@ export default class Logs extends Component{
                 console.log(result)
                 console.log(result.data)
                 this.setState(({logs:result.data}))
-            })
+            }).catch(function (error){
+                console.log(error.response.data)
+                //this.props.history.push('/feed')
+        })
     }
 
     render() {
@@ -48,7 +58,7 @@ export default class Logs extends Component{
                 {this.state.logs.map((e) =>{
                     return(
                         <Toast>
-                            <Toast.Header key={e} closeButton={false}>
+                            <Toast.Header  closeButton={false}>
                                 <img src="holder.js/20x20?text=%20" className="rounded me-2" alt=""/>
                                 <strong className="me-auto"> <a href="/feed/username"> {e.username}</a> </strong>
                                 <small className="text-muted">{e.date}</small>
