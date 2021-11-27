@@ -1,0 +1,20 @@
+services:
+  frontend1:
+    build: ./frontend
+
+  backend:
+    build: ./backend
+    environment:
+      - TWATTER_DB_PW=${TWATTER_DB_PW}
+      - TWATTER_DB_HOST=${TWATTER_DB_HOST}
+    ports:
+      - "8080:8080"
+    links:
+      - database
+
+  database:
+    image: mysql
+    environment:
+      - POSTGRES_PASSWORD=${TWATTER_DB_PW}
+    ports:
+      - "5432:5432"

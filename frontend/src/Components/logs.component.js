@@ -1,51 +1,56 @@
-import React, {Component} from "react";
+import React, {Component, useEffect, useState} from "react";
 import axios from "axios";
 import {LOGS} from "../Constants/Constants";
 import {Toast, ToastContainer} from "react-bootstrap";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 
 
-export default class Logs extends Component{
+export default function Logs(logs){
 
+    const [username, setUsername] = useState();
+    const {userParam} = useParams();
+    const location = useLocation();
 
-    constructor(props) {
-        console.log("props" + props.name)
-        super(props);
+    console.log(logs)
+
+    useEffect(()=>{
+
+        console.log(userParam)
+
         const user = localStorage.getItem('user');
         let username;
-        if (user){
+        if (userParam){
+            username = userParam;
+        }
+        else if (user){
             const foundUser = JSON.parse(user);
             console.log("User: "+ foundUser.username)
             username = foundUser.username;
         }
+        if (username)
+            setUsername(username)
 
-        this.state ={logs: [],username:username}
-        this.componentDidMount = this.componentDidMount.bind(this)
-    }
+        updateData();
+    },[location.pathname])
 
-    componentDidMount() {
-
-        this.updateData();
-    }
-
-    updateData(){
+    function updateData(){
         let axiosConfig = {headers:{'Content-Type':'application/json'}}
-        let url = LOGS+"/" + (this.state.username);
+        let url = LOGS+"/" + (username);
         console.log("url" + url)
-        console.log("username: " + this.state.username)
-        let a = axios.get(LOGS+"/"+this.state.username,
+        console.log("username: " + username)
+        let a = axios.get(LOGS+"/"+username,
             axiosConfig).then(
             result => {
                 console.log(result)
                 console.log(result.data)
-                this.setState(({logs:result.data}))
+                //logs = result.data;
+                //this.setState(({logs:result.data}))
             })
     }
 
-    render() {
         return(
             <ToastContainer>
-                {this.state.logs.map((e) =>{
+                {logs.map((e) =>{
                     return(
                         <Toast>
                             <Toast.Header key={e} closeButton={false}>
@@ -62,8 +67,6 @@ export default class Logs extends Component{
 
     );
 
-
-    }
 
 
 }

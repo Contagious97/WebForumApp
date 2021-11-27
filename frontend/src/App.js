@@ -7,51 +7,92 @@ import React, {useEffect, useState} from "react";
 
 import Login from "./Components/login.component";
 import SignUp from "./Components/signup.component";
-import {Route, BrowserRouter as Router, Switch, useParams} from "react-router-dom";
+import {Route, BrowserRouter as Router, Switch, useParams, useHistory, useLocation} from "react-router-dom";
 import Feed from "./Components/feed.component";
+import Logout from "./Components/logout.component";
 
 
 
-function App(){
 
-    const [user,setUser] = useState();
+    export default function(){
+        const [user,setUser] = useState();
+        const location = useLocation();
+        useEffect(()=>{
+            const lookup = localStorage.getItem('user');
+            if (lookup != null){
+                const foundUser = JSON.parse(lookup)
+                console.log(foundUser.username)
+                console.log(foundUser.name)
+                setUser(foundUser);
+                console.log()
+            }
+        },[location.pathname])
 
-    const {userParam} = useParams();
-    console.log("App: userparam"+ userParam)
+        return (
+            <div className="App">
+                {routes()}
+                <Navbar className="navbar navbar-expand-lg navbar-light fixed-top" bg="dark" variant="dark">
+                    <Container>
+                        <Navbar.Brand>WebbForumApp {user?user.name:''}</Navbar.Brand>
+                        {headers()}
+                    </Container>
+                </Navbar>
+            </div>
+        );
+    }
 
 
 
-    useEffect(()=>{
-        const lookup = localStorage.getItem('user');
-        if (lookup){
-            const foundUser = JSON.parse(lookup)
-            console.log(foundUser.username)
-            console.log(foundUser.name)
-            setUser(foundUser);
-            console.log()
-        }
-    },[])
 
-    return (
-        <div className="App">
-        <Navbar className="navbar navbar-expand-lg navbar-light fixed-top" bg="dark" variant="dark">
-            <Container>
-                <Navbar.Brand>WebbForumApp {user?user.name:0}</Navbar.Brand>
+
+
+    function headers(){
+        let loggeduser = localStorage.getItem('user');
+        if (loggeduser == null){
+            return (
                 <Nav className="me-auto">
-                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/sign-in">Login</Nav.Link>
                     <Nav.Link href="/sign-up">Sign Up</Nav.Link>
-                    <Nav.Link href="/feed">Feed</Nav.Link>
                 </Nav>
-            </Container>
-        </Navbar>
-            <Switch>
-                <Route exact path='/' component={Login} />
-                <Route path="/sign-in" component={Login} />
-                <Route path="/sign-up" component={SignUp} />
-                <Route path="/feed/:userParam" component={Feed} userParam={userParam}/>
-            </Switch>
-        </div>
-    );
-}
+            )
+        } else{
+            return (
+                <Nav className="me-auto">
+                    <Nav.Link href="/feed">Feed</Nav.Link>
+                    <Nav.Link href="/logout">Logout</Nav.Link>
+                </Nav>
 
-export default App;
+            )
+        }
+    }
+
+    function routes(){
+
+        let loggedInUser = localStorage.getItem('user');
+        console.log(loggedInUser)
+
+        if (loggedInUser == null){
+            return(
+                <Switch>
+                    <Route exact path='/' component={Login} />
+                    <Route path="/sign-in" component={Login} />
+                    <Route path="/sign-up" component={SignUp} />
+                </Switch>
+            )
+        } else {
+            return(
+                <Switch>
+                    <Route path="/feed/:userParam" component={Feed}/>
+                    <Route path="/logout" component={Logout}/>
+                    <Route exact-path="/feed" component={Feed}/>
+                </Switch>
+            )
+        }
+
+
+
+    }
+
+
+
+//export default App;
