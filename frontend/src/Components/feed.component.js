@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useEffect, useState} from "react";
 import {
     Card, Col,
     Container,
@@ -11,37 +11,107 @@ import {
 import axios from "axios";
 import {LOGIN, LOGS} from "../Constants/Constants";
 import Logs from "./logs.component";
+import {renderLogs} from "./logs.component";
 import {useLocation, useParams} from "react-router-dom";
 
 
-export default class Feed extends Component {
+export default function Feed() {
 
-    constructor(props) {
-        super(props);
-        console.log("props param: "+props.userParam)
-        this.state = {username:'',name:'',content:''}
-        this.componentDidMount = this.componentDidMount.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
+    //this.state = {username:'',name:'',content:''};
+    //const [username, setUsername] = useState();
+    //const [name, setName] = useState()
+    const [isLoading, setLoading] = useState(true);
+    const [content,setContent] = useState();
+    const [logs, setLogs] = useState();
+    const [username,setUsername] = useState();
+    const [name,setName] = useState();
+    const location = useLocation();
 
-    componentDidMount() {
+
+    const {userParam} = useParams();
+    console.log(userParam)
+    useEffect(() =>{
+
         const user = localStorage.getItem('user');
-        if (user){
+        const foundUser = JSON.parse(user);
+
+
+        if (userParam){
+            setUsername(userParam)
+            console.log(username)
+
+            if (user){
+                console.log("User: "+ foundUser.username)
+                setUsername(foundUser.username)
+                //username = foundUser.username
+                //setUsername(foundUser.username)
+                //name = foundUser.name
+                setName(foundUser.name)
+                console.log(username)
+            }
+
+        } else {
             const foundUser = JSON.parse(user);
             console.log("User: "+ foundUser.username)
-            this.setState(({username:foundUser.username,name:foundUser.name}),()=>
-            {console.log(this.state.name)
-            console.log(this.state.username)} )
+            setUsername(foundUser.username)
+            setName(foundUser.name)
         }
 
+        if (userParam)
+            getLogs(userParam).then(r => console.log(r))
+        else getLogs(foundUser.username).then(r => console.log(r))
+        //getLogs().then(r => console.log(r))
 
+        console.log(logs)
+    },[])
+
+    async function getLogs(username){
+        let axiosConfig = {headers:{'Content-Type':'application/json'}}
+        let url = LOGS+"/" + (username);
+        //let logs;
+        console.log("url" + url)
+        console.log("username: " + username)
+        await axios.get(LOGS+"/"+username,
+            axiosConfig).then(
+            result => {
+                console.log(result)
+                console.log(result.data)
+                setLogs(result.data);
+                console.log("Logs" + logs)
+                setLoading(false);
+                //return logs;
+                //this.setState(({logs:result.data}))
+            }).catch(function (error) {
+                console.log(error.data)
+        })
     }
 
-    handleSubmit(event){
-        let axiosBody = {content: this.state.content,userName: this.state.username}
+    function renderTextBox(){
+        const user = localStorage.getItem('user');
+
+        let founduser = JSON.parse(user)
+        console.log(founduser.username + username)
+        if (!userParam){
+            return (
+
+                    <Form.Group className={"message-view"} controlId="exampleForm.ControlTextarea1">
+                        <Form.Control value={content} onChange={e => setContent(e.target.value)} as="textarea" placeholder={"What's happening?"} rows={3}/>
+                        <button type="submit" className="btn btn-dark btn-block flex-end">Submit</button>
+                    </Form.Group>
+            )
+        } else {
+            return (
+                <div>hi</div>
+            )
+        }
+    }
+
+    async function handleSubmit(event){
+        const user = JSON.parse(localStorage.getItem('user'));
+        let axiosBody = {content: content,userName: user.username}
         console.log(axiosBody)
         let axiosConfig = {headers:{'Content-Type':'application/json'}}
-        let a = axios.post(LOGS,axiosBody,
+        let a = await axios.post(LOGS,axiosBody,
             axiosConfig).then(
             result => {
                 console.log("Result: " + result)
@@ -58,31 +128,39 @@ export default class Feed extends Component {
         event.preventDefault();
     }
 
-    render() {
+    function Loading(){
+        return(
+            <h1>LOADING...</h1>
+        )
+    }
+
+    function render(){
         return (
             <Container className={"feedContainer"}>
                 <div>
                     <Card className={"card-image"}>
                         <Card.Header>User Information</Card.Header>
                         <ListGroup variant="flush">
-                            <ListGroup.Item>Name: {this.state.name}</ListGroup.Item>
-                            <ListGroup.Item>Username: {this.state.username}</ListGroup.Item>
+                            <ListGroup.Item>Name: {name}</ListGroup.Item>
+                            <ListGroup.Item>Username: {username}</ListGroup.Item>
                         </ListGroup>
                     </Card>
                 </div>
                 <div>
-                    <Form onSubmit={this.handleSubmit}>
-                        <Form.Group className={"message-view"} controlId="exampleForm.ControlTextarea1">
-                            <Form.Control value={this.state.content} onChange={e =>this.setState({content:e.target.value})} as="textarea" placeholder={"What's happening?"} rows={3}/>
-                            <button type="submit" className="btn btn-dark btn-block flex-end">Submit</button>
-                        </Form.Group>
+                    <Form onSubmit={handleSubmit}>
+                        {renderTextBox(username, name)}
                     </Form>
-
                 </div>
 
-                <Logs/>
+
+                {isLoading? Loading(): renderLogs(logs)}
+
+                {console.log(logs)}
+                {console.log(username)}
+
 
             </Container>
         );
     }
+   return render();
 }

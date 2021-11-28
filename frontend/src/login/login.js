@@ -4,18 +4,26 @@ import {loginUtil} from "./LoginUtil"
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
+import {LOGIN} from "../Constants/Constants";
+
 //import "./Login.css";
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    let validInput = false;
 
     function validateForm() {
-        return username.length > 0 && password.length > 0;
+        validInput = username.length > 0 && password.length > 0;
     }
 
     function handleSubmit(event) {
-        event.preventDefault();
+        console.log(this.state);
+        axios.post(LOGIN,{username: username,password:password}).
+        then(response =>{
+            console.log(response)
+        })
     }
 
     return (
@@ -38,7 +46,7 @@ function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
-                <Button block size="lg" type="submit" disabled={!validateForm()}>
+                <Button variant={"primary"} block size="lg" type="submit" >
                     Login
                 </Button>
             </Form>

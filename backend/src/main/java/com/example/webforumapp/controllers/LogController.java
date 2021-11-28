@@ -51,6 +51,7 @@ public class LogController{
         logger.info(logRequest.toString());
         try {
             if (logService.createLog(logRequest)){
+                logger.info("LOG CREATED");
                 return new ResponseEntity<>("Success",HttpStatus.OK);
             } else return new ResponseEntity<>("error",HttpStatus.BAD_REQUEST);
         } catch (Exception e){
