@@ -31,6 +31,7 @@ public class LogService {
     public boolean createLog(CreateLogRequest logRequest) throws Exception{
 
         Log log =  new Log();
+        logger.info("Log request username: " + logRequest.getUserName());
         User user = userRepository.getUserByUserName(logRequest.getUserName());
         log.setContent(logRequest.getContent());
         long millis = System.currentTimeMillis();

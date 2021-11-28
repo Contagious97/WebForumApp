@@ -5,49 +5,46 @@ import {Toast, ToastContainer} from "react-bootstrap";
 import {useLocation, useParams} from "react-router-dom";
 
 
-export default function Logs(logs){
+export default function(user) {
 
-    const [username, setUsername] = useState();
-    const {userParam} = useParams();
-    const location = useLocation();
+
+    let logs = [];
+    console.log(user)
+   // setUsername(user)
+    updateData(user,logs).then(r => console.log(r));
 
     console.log(logs)
+    useEffect(() => {
 
-    useEffect(()=>{
+        console.log(user)
 
-        console.log(userParam)
+        //logs = logsParam
+        console.log(logs)
+//        setUsername(user)
 
-        const user = localStorage.getItem('user');
-        let username;
-        if (userParam){
-            username = userParam;
-        }
-        else if (user){
-            const foundUser = JSON.parse(user);
-            console.log("User: "+ foundUser.username)
-            username = foundUser.username;
-        }
-        if (username)
-            setUsername(username)
-
-        updateData();
-    },[location.pathname])
-
-    function updateData(){
+        //updateData().then(r => console.log(r));
+    }, [])
+    return renderLogs(logs);
+}
+    async function updateData(user, logs){
         let axiosConfig = {headers:{'Content-Type':'application/json'}}
-        let url = LOGS+"/" + (username);
+        let url = LOGS+"/" + (user);
         console.log("url" + url)
-        console.log("username: " + username)
-        let a = axios.get(LOGS+"/"+username,
+        console.log("username: " + user)
+        let a = await axios.get(LOGS+"/"+user,
             axiosConfig).then(
             result => {
                 console.log(result)
                 console.log(result.data)
-                //logs = result.data;
+                logs = result.data;
+                console.log(logs)
                 //this.setState(({logs:result.data}))
-            })
+            }).catch(function (error){
+                console.log(error.response.data)
+        })
     }
 
+    export function renderLogs(logs){
         return(
             <ToastContainer>
                 {logs.map((e) =>{
@@ -60,13 +57,10 @@ export default function Logs(logs){
                             </Toast.Header>
                             <Toast.Body>{e.content}</Toast.Body>
                         </Toast>
-                );
+                    );
                 })}
 
             </ToastContainer>
 
-    );
-
-
-
-}
+        );
+    }
