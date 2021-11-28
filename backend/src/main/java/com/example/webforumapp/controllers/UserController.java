@@ -45,7 +45,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{}")
+    @GetMapping()
     public ResponseEntity<String> getUsers() {
 
         try {

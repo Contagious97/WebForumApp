@@ -34,7 +34,7 @@ public class UserInfoService implements UserDetailsService {
     }
 
     public List<User> getUsers() throws NotFoundException {
-        List<User> users = userRepository.getUsers();
+        List<User> users = userRepository.findAll();
 
         if (users.size() == 0){
             throw new NotFoundException("No users were found!");

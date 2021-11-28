@@ -42,11 +42,6 @@ import DMs from "./Components/DMs.components";
         );
     }
 
-
-
-
-
-
     function headers(){
         let loggeduser = localStorage.getItem('user');
         if (loggeduser == null){
@@ -61,6 +56,7 @@ import DMs from "./Components/DMs.components";
                 <Nav className="me-auto">
                     <Nav.Link href="/feed">Feed</Nav.Link>
                     <Nav.Link href="/logout">Logout</Nav.Link>
+                    <Nav.Link href="/dms">Direct Messages</Nav.Link>
                 </Nav>
 
             )
@@ -86,6 +82,7 @@ import DMs from "./Components/DMs.components";
                     <Route path="/feed/:userParam" component={Feed}/>
                     <Route path="/logout" component={Logout}/>
                     <Route exact-path="/feed" component={Feed}/>
+                    <Route exact-path="/dms" component={DMs}/>
                 </Switch>
             )
         }
