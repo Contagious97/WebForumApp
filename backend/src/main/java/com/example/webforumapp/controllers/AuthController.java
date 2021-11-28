@@ -6,7 +6,6 @@ import com.example.webforumapp.models.replys.UserDetails;
 import com.example.webforumapp.models.requests.UserDetailsRequest;
 import com.example.webforumapp.services.LoginService;
 import com.example.webforumapp.services.UserInfoService;
-import com.google.gson.Gson;
 import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +47,6 @@ public class AuthController {
                 UserDetails userDetails = new UserDetails();
                 userDetails.setUserName(user.getUserName());
                 userDetails.setName(user.getName());
-                String userJson = new Gson().toJson(userDetails);
                 logger.info(resp.toJSONString());
                 return new ResponseEntity<>(resp.toJSONString(),HttpStatus.ACCEPTED);
             } else return new ResponseEntity<>("Unsuccessful login",HttpStatus.UNAUTHORIZED);
