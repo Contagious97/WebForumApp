@@ -1,4 +1,4 @@
-package com.example.webforumapp.models;
+package com.example.webforumapp.models.replys;
 
 public class MessageInfo {
 

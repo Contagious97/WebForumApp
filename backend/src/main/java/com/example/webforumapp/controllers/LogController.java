@@ -2,9 +2,7 @@ package com.example.webforumapp.controllers;
 
 
 import com.example.webforumapp.models.Log;
-import com.example.webforumapp.models.LogInfo;
-import com.example.webforumapp.models.Message;
-import com.example.webforumapp.models.MessageInfo;
+import com.example.webforumapp.models.replys.LogInfo;
 import com.example.webforumapp.models.requests.CreateLogRequest;
 import com.example.webforumapp.services.LogService;
 import net.minidev.json.JSONArray;

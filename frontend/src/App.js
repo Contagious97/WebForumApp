@@ -10,6 +10,7 @@ import SignUp from "./Components/signup.component";
 import {Route, BrowserRouter as Router, Switch, useParams, useHistory, useLocation} from "react-router-dom";
 import Feed from "./Components/feed.component";
 import Logout from "./Components/logout.component";
+import DMs from "./Components/DMs.component";
 
 
 
@@ -60,6 +61,7 @@ import Logout from "./Components/logout.component";
                 <Nav className="me-auto">
                     <Nav.Link href="/feed">Feed</Nav.Link>
                     <Nav.Link href="/logout">Logout</Nav.Link>
+                    <Nav.Link href="/message">Message</Nav.Link>
                 </Nav>
 
             )
@@ -82,6 +84,7 @@ import Logout from "./Components/logout.component";
         } else {
             return(
                 <Switch>
+                    <Route path="/message" component={DMs}/>
                     <Route path="/feed/:userParam" component={Feed}/>
                     <Route path="/logout" component={Logout}/>
                     <Route exact-path="/feed" component={Feed}/>

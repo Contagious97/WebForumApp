@@ -1,5 +1,6 @@
-package com.example.webforumapp.models;
+package com.example.webforumapp.models.replys;
 
+import com.example.webforumapp.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

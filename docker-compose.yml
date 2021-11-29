@@ -8,6 +8,7 @@ services:
     ports:
       - "3306:3306"
   frontend:
+    build: .
     image: webforum-frontend:latest
     environment:
       PORT: 3000
@@ -16,6 +17,7 @@ services:
       - "3000:3000"
     stdin_open: true
   backend:
+    build: .
     image: webforum-backend:latest
     environment:
       MYSQL_DB: jdbc:mysql://database:3306/webforum

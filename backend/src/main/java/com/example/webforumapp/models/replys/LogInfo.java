@@ -1,4 +1,4 @@
-package com.example.webforumapp.models;
+package com.example.webforumapp.models.replys;
 
 import java.sql.Date;
 

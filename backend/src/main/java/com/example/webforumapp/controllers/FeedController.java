@@ -1,6 +1,6 @@
 package com.example.webforumapp.controllers;
 
-import com.example.webforumapp.models.LogInfo;
+import com.example.webforumapp.models.replys.LogInfo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
