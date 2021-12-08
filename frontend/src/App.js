@@ -11,6 +11,7 @@ import {Route, BrowserRouter as Router, Switch, useParams, useHistory, useLocati
 import Feed from "./Components/feed.component";
 import Logout from "./Components/logout.component";
 import DMs from "./Components/DMs.component";
+import Whiteboard from './Components/Whiteboard';
 
 
 
@@ -54,6 +55,7 @@ import DMs from "./Components/DMs.component";
                 <Nav className="me-auto">
                     <Nav.Link href="/sign-in">Login</Nav.Link>
                     <Nav.Link href="/sign-up">Sign Up</Nav.Link>
+                    <Nav.Link href="/canvas">Canvas</Nav.Link>
                 </Nav>
             )
         } else{
@@ -79,6 +81,7 @@ import DMs from "./Components/DMs.component";
                     <Route exact path='/' component={Login} />
                     <Route path="/sign-in" component={Login} />
                     <Route path="/sign-up" component={SignUp} />
+                    <Route path = "/canvas" component = {Whiteboard}/>
                 </Switch>
             )
         } else {
