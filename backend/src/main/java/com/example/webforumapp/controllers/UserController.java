@@ -30,6 +30,7 @@ public class UserController {
             UserDetails userDetails = new UserDetails();
             userDetails.setUserName(user.getUsername());
             userDetails.setName(user.getName());
+            userDetails.setUserId(user.getId());
             String reply = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(userDetails);
             return new ResponseEntity<>(reply,HttpStatus.OK);
         } catch (Exception e){

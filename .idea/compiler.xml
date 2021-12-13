@@ -7,11 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="backend" />
+        <module name="log-microservice" />
+        <module name="message-microservice" />
+        <module name="dispatcher" />
         <module name="webforumapp" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="backend" target="16" />
+      <module name="dispatcher" target="11" />
+      <module name="log-microservice" target="11" />
+      <module name="message-microservice" target="11" />
       <module name="webforumapp" target="16" />
     </bytecodeTargetLevel>
   </component>
