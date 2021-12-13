@@ -50,7 +50,7 @@ public class AuthController {
                 userDetails.setName(user.getName());
                 String userJson = new Gson().toJson(userDetails);
                 logger.info(resp.toJSONString());
-                return new ResponseEntity<>(resp.toJSONString(),HttpStatus.ACCEPTED);
+                return new ResponseEntity<>(resp.toJSONString(),HttpStatus.OK);
             } else return new ResponseEntity<>("Unsuccessful login",HttpStatus.UNAUTHORIZED);
         } catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
@@ -62,7 +62,7 @@ public class AuthController {
         logger.info(user.toString());
         try {
             if (loginService.signUp(user.getUserName(),user.getPassword(),user.getName()) != null){
-                return new ResponseEntity<>("User created",HttpStatus.ACCEPTED);
+                return new ResponseEntity<>("User created",HttpStatus.OK);
             } else return new ResponseEntity<>("User Not created",HttpStatus.UNAUTHORIZED);
         } catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);

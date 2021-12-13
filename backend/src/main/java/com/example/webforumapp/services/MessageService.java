@@ -4,6 +4,8 @@ import com.example.webforumapp.models.Message;
 import com.example.webforumapp.models.User;
 import com.example.webforumapp.repositories.MessageRepository;
 import com.example.webforumapp.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class MessageService {
     private UserRepository userRepository;
     @Autowired
     private MessageRepository messageRepository;
+
+    Logger logger = LoggerFactory.getLogger(LogService.class);
+
 
     public List<Message> getMessagesById(int userId) throws Exception{
         User user = userRepository.getUserById(userId);
@@ -32,15 +37,19 @@ public class MessageService {
         return messages;
     }
 
-    public boolean sendMessage(String message, int senderId, int receiverId) throws Exception{
-        if (!userRepository.existsById(senderId)|| !userRepository.existsById(receiverId))
+    public boolean sendMessage(String message, String sender, String receiver) throws Exception{
+
+        logger.info("Message: " + message + "sender: " + sender + "receiver: " + receiver);
+
+        User userSender = userRepository.getUserByUserName(sender);
+        User userReceiver = userRepository.getUserByUserName(receiver);
+        if (userReceiver == null || userSender == null)
             throw new Exception("Users not found");
 
-        System.out.println("Message: " + message + "senderId: " + senderId + "receiverId: " + receiverId);
         Message messageToSend = new Message();
         messageToSend.setMessage(message);
-        messageToSend.setSender(userRepository.getUserById(senderId));
-        messageToSend.setReceiver(userRepository.getUserById(receiverId));
+        messageToSend.setSender(userRepository.getUserByUserName(sender));
+        messageToSend.setReceiver(userRepository.getUserByUserName(receiver));
         messageRepository.save(messageToSend);
         return true;
     }

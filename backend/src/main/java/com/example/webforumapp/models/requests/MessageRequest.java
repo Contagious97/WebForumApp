@@ -2,26 +2,26 @@ package com.example.webforumapp.models.requests;
 
 public class MessageRequest {
 
-    private int receiverId;
+    private String receiverName;
 
-    private int senderId;
+    private String senderName;
 
     private String message;
 
-    public int getReceiverId() {
-        return receiverId;
+    public String getReceiverName() {
+        return receiverName;
     }
 
-    public void setReceiverId(int receiverId) {
-        this.receiverId = receiverId;
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
     }
 
-    public int getSenderId() {
-        return senderId;
+    public String getSenderName() {
+        return senderName;
     }
 
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
     public String getMessage() {
