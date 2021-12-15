@@ -8,14 +8,29 @@ import {
     Toast,
     ToastContainer
 } from "react-bootstrap";
+import faker from 'faker';
+
+import { Line } from 'react-chartjs-2';
+
 import axios from "axios";
 import {LOGIN, LOGS} from "../Constants/Constants";
 import Logs from "./logs.component";
 import {renderLogs} from "./logs.component";
 import {useLocation, useParams} from "react-router-dom";
+import {CategoryScale, Chart as ChartJS, Legend, LinearScale, LineElement, Tooltip, PointElement, Title} from "chart.js";
 
 
 export default function Feed() {
+
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        PointElement,
+        LineElement,
+        Title,
+        Tooltip,
+        Legend
+    );
 
     //this.state = {username:'',name:'',content:''};
     //const [username, setUsername] = useState();
@@ -86,7 +101,53 @@ export default function Feed() {
         })
     }
 
+    const data = {
+        labels: ['Jan', 'Mar', 'May', 'July', 'Oct'],
+        datasets: [
+            {
+                label: 'Iphone sales',
+                data: [400, 1000, 4000, 800, 1500],
+                fill: true,
+                backgroundColor:"#2e4355",
+                pointBorderColor:"#8884d8",
+                pointBorderWidth:5,
+                pointRadius:8,
+                tension: 0.4
+            },
+        ],
+    };
+
+    const options = {
+        plugins:{legend:{display:false}},
+        layout:{padding:{bottom:100}},
+        scales: {
+            y:{
+                ticks:{
+                    color:"white",
+                    font:{
+                        size:18
+                    }
+                },
+                grid:{
+                    color:"#243240"
+                }
+            },
+            x:{
+                ticks:{
+                    color:"white",
+                    font:{
+                        size:18
+                    }
+                }
+            }
+        },
+    };
+
+    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+
     function renderTextBox(){
+        
         const user = localStorage.getItem('user');
 
         let founduser = JSON.parse(user)
@@ -96,8 +157,10 @@ export default function Feed() {
 
                     <Form.Group className={"message-view"} controlId="exampleForm.ControlTextarea1">
                         <Form.Control value={content} onChange={e => setContent(e.target.value)} as="textarea" placeholder={"What's happening?"} rows={3}/>
-                        <button type="submit" className="btn btn-dark btn-block flex-end">Submit</button>
+                        <button type="submit" className="btn btn-dark btn-block">Submit</button>
+                        <Line options={options} data={data}  type={'line'}/>;
                     </Form.Group>
+
             )
         } else {
             return (

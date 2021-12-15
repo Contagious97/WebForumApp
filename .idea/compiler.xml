@@ -10,6 +10,7 @@
         <module name="log-microservice" />
         <module name="message-microservice" />
         <module name="dispatcher" />
+        <module name="user-microservice" />
         <module name="webforumapp" />
       </profile>
     </annotationProcessing>
@@ -18,6 +19,7 @@
       <module name="dispatcher" target="11" />
       <module name="log-microservice" target="11" />
       <module name="message-microservice" target="11" />
+      <module name="user-microservice" target="11" />
       <module name="webforumapp" target="16" />
     </bytecodeTargetLevel>
   </component>

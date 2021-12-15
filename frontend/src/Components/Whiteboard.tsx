@@ -32,7 +32,7 @@ let ws: WebSocket
 let connectionPromise: Promise<unknown>
 function connect() {
     return connectionPromise != undefined ? connectionPromise : connectionPromise = new Promise((resolve, reject) => {
-        ws = new WebSocket("ws://localhost:34343");
+        // ws = new WebSocket("ws://localhost:34343");
         let ok = false
         ws.onopen = e => {
             ws.send(JSON.stringify({

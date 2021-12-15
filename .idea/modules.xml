@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/user-microservice/user-microservice/log-microservice.iml" filepath="$PROJECT_DIR$/user-microservice/user-microservice/log-microservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/message-microservice/message-microservice.iml" filepath="$PROJECT_DIR$/message-microservice/message-microservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user-microservice/user-microservice/user-microservice.iml" filepath="$PROJECT_DIR$/user-microservice/user-microservice/user-microservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/backend/webforumapp.iml" filepath="$PROJECT_DIR$/backend/webforumapp.iml" />
     </modules>
   </component>

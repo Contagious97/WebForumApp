@@ -45,9 +45,7 @@ export default class DMs extends Component {
                     )
                 })}
                 </DropdownButton>
-
             )
-
         }
     }
 

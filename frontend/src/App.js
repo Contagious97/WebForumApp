@@ -12,6 +12,7 @@ import Feed from "./Components/feed.component";
 import Logout from "./Components/logout.component";
 import DMs from "./Components/DMs.component";
 import Whiteboard from './Components/Whiteboard';
+import container from "./Components/Container/container";
 
 
 
@@ -81,7 +82,7 @@ import Whiteboard from './Components/Whiteboard';
                     <Route exact path='/' component={Login} />
                     <Route path="/sign-in" component={Login} />
                     <Route path="/sign-up" component={SignUp} />
-                    <Route path = "/canvas" component = {Whiteboard}/>
+                    <Route path = "/canvas" component = {container}/>
                 </Switch>
             )
         } else {
