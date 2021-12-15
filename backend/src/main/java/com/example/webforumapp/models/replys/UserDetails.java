@@ -4,6 +4,7 @@ import com.example.webforumapp.models.User;
 
 public class UserDetails {
 
+    private int userId;
     private String name;
     private String userName;
 
@@ -16,6 +17,14 @@ public class UserDetails {
 
     public String getName() {
         return name;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setName(String name) {

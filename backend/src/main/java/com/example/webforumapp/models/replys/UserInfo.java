@@ -8,6 +8,7 @@ import java.util.Collection;
 
 public class UserInfo implements UserDetails {
 
+    int id;
     String userName;
     String password;
     String name;
@@ -16,8 +17,12 @@ public class UserInfo implements UserDetails {
         this.userName = user.getUserName();
         this.password = user.getPassword();
         this.name = user.getName();
+        this.id = user.getId();
     }
 
+    public int getId() {
+        return id;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

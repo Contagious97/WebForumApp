@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/backend/backend.iml" filepath="$PROJECT_DIR$/backend/backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/canvas-microservice/canvas-microservice.iml" filepath="$PROJECT_DIR$/canvas-microservice/canvas-microservice.iml" />
+      <module fileurl="file://$USER_HOME$/Downloads/dispatcher/dispatcher.iml" filepath="$USER_HOME$/Downloads/dispatcher/dispatcher.iml" />
       <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user-microservice/user-microservice/log-microservice.iml" filepath="$PROJECT_DIR$/user-microservice/user-microservice/log-microservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/message-microservice/message-microservice.iml" filepath="$PROJECT_DIR$/message-microservice/message-microservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/backend/webforumapp.iml" filepath="$PROJECT_DIR$/backend/webforumapp.iml" />
     </modules>
   </component>
