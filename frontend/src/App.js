@@ -13,6 +13,7 @@ import Logout from "./Components/logout.component";
 import DMs from "./Components/DMs.component";
 import Whiteboard from './Components/Whiteboard';
 import container from "./Components/Container/container";
+import Charts from "./Components/Chart/Chart";
 
 
 
@@ -65,6 +66,7 @@ import container from "./Components/Container/container";
                     <Nav.Link href="/feed">Feed</Nav.Link>
                     <Nav.Link href="/logout">Logout</Nav.Link>
                     <Nav.Link href="/message">Message</Nav.Link>
+                    <Nav.Link href="/charts">Charts</Nav.Link>
                 </Nav>
 
             )
@@ -88,6 +90,7 @@ import container from "./Components/Container/container";
         } else {
             return(
                 <Switch>
+                    <Route path = "/charts" component = {Charts}/>
                     <Route path="/message" component={DMs}/>
                     <Route path="/feed/:userParam" component={Feed}/>
                     <Route path="/logout" component={Logout}/>

@@ -1,0 +1,14 @@
+
+
+.chartPosition {
+    padding-top: 60px;
+    text-align: left;
+    justify-content: left;
+    position: relative;
+    background: white;
+}
+
+.pad{
+    padding-left: 10px;
+    margin: 10px;
+}
