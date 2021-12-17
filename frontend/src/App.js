@@ -11,7 +11,8 @@ import {Route, BrowserRouter as Router, Switch, useParams, useHistory, useLocati
 import Feed from "./Components/feed.component";
 import Logout from "./Components/logout.component";
 import DMs from "./Components/DMs.component";
-import Whiteboard from './Components/Whiteboard';
+import container from "./Components/Container/container";
+import Charts from './Components/Chart/Chart';
 
 
 
@@ -55,7 +56,6 @@ import Whiteboard from './Components/Whiteboard';
                 <Nav className="me-auto">
                     <Nav.Link href="/sign-in">Login</Nav.Link>
                     <Nav.Link href="/sign-up">Sign Up</Nav.Link>
-                    <Nav.Link href="/canvas">Canvas</Nav.Link>
                 </Nav>
             )
         } else{
@@ -64,6 +64,8 @@ import Whiteboard from './Components/Whiteboard';
                     <Nav.Link href="/feed">Feed</Nav.Link>
                     <Nav.Link href="/logout">Logout</Nav.Link>
                     <Nav.Link href="/message">Message</Nav.Link>
+                    <Nav.Link href="/canvas">Canvas</Nav.Link>
+                    <Nav.Link href="/charts">Charts</Nav.Link>
                 </Nav>
 
             )
@@ -81,7 +83,6 @@ import Whiteboard from './Components/Whiteboard';
                     <Route exact path='/' component={Login} />
                     <Route path="/sign-in" component={Login} />
                     <Route path="/sign-up" component={SignUp} />
-                    <Route path = "/canvas" component = {Whiteboard}/>
                 </Switch>
             )
         } else {
@@ -90,7 +91,9 @@ import Whiteboard from './Components/Whiteboard';
                     <Route path="/message" component={DMs}/>
                     <Route path="/feed/:userParam" component={Feed}/>
                     <Route path="/logout" component={Logout}/>
-                    <Route exact-path="/feed" component={Feed}/>
+                    <Route path = "/canvas" component = {container}/>
+                    <Route path="/feed" component={Feed}/>
+                    <Route path="/charts" component={Charts}></Route>
                 </Switch>
             )
         }

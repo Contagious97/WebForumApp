@@ -39,7 +39,10 @@ public class MessageHandler {
 
   public void get(RoutingContext rc) {
     var params = rc.pathParams();
-    int receiverId = Integer.valueOf(params.get("userName"));
+    LOGGER.log(Level.INFO,params.toString());
+    int receiverId = Integer.parseInt(params.get("userId"));
+
+    LOGGER.log(Level.INFO,"ReveiverId: " + receiverId);
     this.messages.findById(receiverId)
       .onSuccess(
         post -> rc.response().end(Json.encode(post))
@@ -60,11 +63,12 @@ public class MessageHandler {
     this.messages.save(Message.of(form.getContent(), form.getReceiverId(),form.getSenderId()))
       .onSuccess(
         savedId -> rc.response()
-          .putHeader("Location", "/posts/" + savedId)
-          .setStatusCode(201)
+          .putHeader("Location", "/messages/" + savedId)
+          .setStatusCode(200)
           .end()
       ).onFailure(error->{
         LOGGER.log(Level.INFO, error.getMessage());
+        rc.fail(error);
       });
   }
 

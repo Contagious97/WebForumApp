@@ -3,7 +3,6 @@ package com.example.user_microservice;
 import io.vertx.core.Future;
 import io.vertx.mysqlclient.MySQLPool;
 import io.vertx.sqlclient.Row;
-import io.vertx.sqlclient.RowSet;
 import io.vertx.sqlclient.Tuple;
 
 import java.sql.Timestamp;
@@ -22,7 +21,7 @@ public class LogRepository {
       row.getInteger("id"),
       row.getString("content"),
       Timestamp.valueOf(row.getLocalDateTime("date")),
-      row.getString("userName")
+      row.getInteger("userId")
     );
 
 
@@ -47,25 +46,22 @@ public class LogRepository {
   }
 
 
-  public Future<Log> findById(String id) {
-    return client.preparedQuery("SELECT * FROM logs WHERE userName=?").execute(Tuple.of(id))
-      .map(RowSet::iterator)
-      .map(iterator -> {
-          if (iterator.hasNext()) {
-            return MAPPER.apply(iterator.next());
-          }
-          throw new RuntimeException("Log not found with id" + id);
-        }
+  public Future<List<Log>> findById(int id) {
+    return client.preparedQuery("SELECT * FROM logs WHERE userId=?").execute(Tuple.of(id))
+      .map(rs -> StreamSupport.stream(rs.spliterator(), false)
+        .map(MAPPER)
+        .collect(Collectors.toList())
       );
   }
 
   public Future<Integer> save(Log log) {
-    LOGGER.log(Level.INFO,log.getContent()+log.getUserName());
-    client.preparedQuery("INSERT INTO logs(content,date,userName) VALUES (?,?,?)").execute(Tuple.of(log.getContent(), log.getDate(),log.getUserName()),
+    LOGGER.log(Level.INFO,log.getContent()+log.getUserId());
+    client.preparedQuery("INSERT INTO logs(content,date,userId) VALUES (?,?,?)").execute(Tuple.of(log.getContent(), log.getDate(),log.getUserId()),
         res -> {
       if (res.succeeded())
         LOGGER.log(Level.INFO,"Inserted new log");
         });
+
 
     return client.query("select last_insert_id()").execute()
       .map(rs -> rs.iterator().next().getInteger("last_insert_id()"));

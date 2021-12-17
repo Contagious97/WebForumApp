@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
@@ -21,6 +21,7 @@
 
     <main.verticle>com.example.message_microservice.MainVerticle</main.verticle>
     <launcher.class>io.vertx.core.Launcher</launcher.class>
+
   </properties>
 
   <dependencyManagement>
@@ -66,20 +67,77 @@
       <version>${junit-jupiter.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.hibernate.reactive</groupId>
+      <artifactId>hibernate-reactive-core</artifactId>
+      <version>1.1.0.Final</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-jpamodelgen</artifactId>
+      <version>5.6.1.Final</version>
+      <scope>provided</scope>
+    </dependency>
+    <!--<dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-jdbc-client</artifactId>
+      <version>3.1.0</version>
+    </dependency>-->
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>2.3.3</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.vertx/vertx-sql-common -->
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-sql-common</artifactId>
+      <version>4.0.0-milestone5</version>
+    </dependency>
+    <!--<dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-jdbc-client</artifactId>
+      <version>3.1.0</version>
+    </dependency>-->
+    <!-- https://mvnrepository.com/artifact/io.fabric8/vertx-maven-plugin -->
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>vertx-maven-plugin</artifactId>
+      <version>1.0.13</version>
+    </dependency>
+
+
   </dependencies>
 
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
+        <version>3.8.1</version>
         <configuration>
           <release>11</release>
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>${maven-shade-plugin.version}</version>
+        <version>3.2.4</version>
+        <configuration>
+          <!--<filters>
+            <filter>
+              <artifact>*:*</artifact>
+              <excludes>
+                <exclude>module-info.class</exclude>
+                <exclude>META-INF/*.SF</exclude>
+                <exclude>META-INF/*.DSA</exclude>
+                <exclude>META-INF/*.RSA</exclude>
+                <exclude>META-INF/**</exclude>
+              </excludes>
+            </filter>
+          </filters>-->
+        </configuration>
         <executions>
           <execution>
             <phase>package</phase>
@@ -97,7 +155,7 @@
                 </transformer>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
               </transformers>
-              <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-fat.jar
+              <outputFile>target/message-microservice-1.0.0-SNAPSHOT-fat.jar
               </outputFile>
             </configuration>
           </execution>
@@ -105,7 +163,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire-plugin.version}</version>
+        <version>3.0.0-M5</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -117,6 +175,23 @@
             <argument>run</argument>
             <argument>${main.verticle}</argument>
           </arguments>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>vertx-maven-plugin</artifactId>
+        <version>1.0.13</version>
+        <executions>
+          <execution>
+            <id>vmp</id>
+            <goals>
+              <goal>initialize</goal>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <redeploy>true</redeploy>
         </configuration>
       </plugin>
     </plugins>

@@ -1,11 +1,13 @@
 package com.example.message_microservice;
 
 public class CreateMessageRequest {
-  private String content;
+
+  private int senderId;
 
   private int receiverId;
 
-  private int senderId;
+  private String content;
+
 
   public int getReceiverId() {
     return receiverId;

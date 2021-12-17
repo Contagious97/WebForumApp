@@ -1,24 +1,23 @@
 package com.example.user_microservice;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
 
 public class Log {
 
 
-  public static Log of(String content, String userId) {
+  public static Log of(String content, int userId) {
     Log data = new Log();
     data.setContent(content);
     data.setUserId(userId);
     data.setDate(new Timestamp(System.currentTimeMillis()));
     return data;
   }
-  public static Log of(int id, String content, Timestamp createdAt,String userName) {
+  public static Log of(int id, String content, Timestamp createdAt,int userId) {
     Log data = new Log();
     data.setId(id);
     data.setContent(content);
     data.setDate(createdAt);
-    data.setUserName(userName);
+    data.setUserId(userId);
     return data;
   }
 
@@ -28,10 +27,10 @@ public class Log {
 
     private Timestamp date;
 
-    private String userName;
+    private int userId;
 
-  public void setUserName(String userName) {
-    this.userName = userName;
+  public void setUserId(int userId) {
+    this.userId = userId;
   }
 
   public int getId() {
@@ -58,12 +57,9 @@ public class Log {
       this.date = date;
     }
 
-    public String getUserName() {
-      return userName;
+    public int getUserId() {
+      return userId;
     }
 
-    public void setUserId(String userId) {
-      this.userName = userId;
-    }
   }
 

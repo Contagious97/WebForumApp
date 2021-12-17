@@ -40,7 +40,7 @@ public class MainVerticle extends AbstractVerticle {
       "  `id` int NOT NULL AUTO_INCREMENT,\n" +
       "  `content` varchar(255) DEFAULT NULL,\n" +
       "  `date` datetime DEFAULT NULL,\n" +
-      "  `userName` varchar(100) DEFAULT NULL,\n" +
+      "  `userId` int NOT NULL,\n" +
       "  PRIMARY KEY (`id`)\n" +
       ") ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n").execute();
 
@@ -54,7 +54,7 @@ public class MainVerticle extends AbstractVerticle {
 
     router.get("/logs").produces("application/json").handler(logHandler::all);
     router.post("/logs").consumes("application/json").handler(BodyHandler.create()).handler(logHandler::save);
-    router.get("/logs/:userName").produces("application/json").handler(logHandler::get);
+    router.get("/logs/:userId").produces("application/json").handler(logHandler::get);
 
     // Create the HTTP server
     vertx.createHttpServer()

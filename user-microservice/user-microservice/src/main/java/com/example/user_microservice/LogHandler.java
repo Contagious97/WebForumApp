@@ -3,9 +3,7 @@ package com.example.user_microservice;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.client.WebClient;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +31,7 @@ public class LogHandler {
 //        LOGGER.log(Level.INFO, " find by keyword: q={0}, limit={1}, offset={2}", new Object[]{q, limit, offset});
     this.logs.findAll()
       .onSuccess(
-        data -> rc.response().end(Json.encode(data))
+        data -> rc.response().setStatusCode(200).end(Json.encode(data))
       ).onFailure(error ->{
         LOGGER.log(Level.INFO, error.getMessage());
       });
@@ -41,13 +39,13 @@ public class LogHandler {
 
   public void get(RoutingContext rc) {
     var params = rc.pathParams();
-    String userName = params.get("userName");
-    this.logs.findById(userName)
+    int userId = Integer.parseInt(params.get("userId"));
+    this.logs.findById(userId)
       .onSuccess(
-        post -> rc.response().end(Json.encode(post))
+        post -> rc.response().setStatusCode(200).end(Json.encode(post))
       )
       .onFailure(
-        throwable -> rc.fail(throwable)
+        rc::fail
       );
 
   }
@@ -59,11 +57,11 @@ public class LogHandler {
     LOGGER.log(Level.INFO, "request body: {0}", body);
     var form = body.mapTo(CreateLogRequest.class);
 
-    this.logs.save(Log.of(form.getContent(), form.getUserName()))
+    this.logs.save(Log.of(form.getContent(), form.getUserId()))
       .onSuccess(
         savedId -> rc.response()
-          .putHeader("Location", "/posts/" + savedId)
-          .setStatusCode(201)
+          .putHeader("Location", "/logs/" + savedId)
+          .setStatusCode(200)
           .end()
       ).onFailure(error->{
         LOGGER.log(Level.INFO, error.getMessage());

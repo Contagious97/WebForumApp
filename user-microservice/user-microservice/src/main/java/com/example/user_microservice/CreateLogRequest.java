@@ -3,7 +3,7 @@ package com.example.user_microservice;
 public class CreateLogRequest {
   private String content;
 
-  private String userName;
+  private int userId;
 
   public String getContent() {
     return content;
@@ -13,12 +13,12 @@ public class CreateLogRequest {
     this.content = content;
   }
 
-  public String getUserName() {
-    return userName;
+  public int getUserId() {
+    return userId;
   }
 
-  public void setUserName(String userName) {
-    this.userName = userName;
+  public void setUserId(int userId) {
+    this.userId = userId;
   }
 
 }

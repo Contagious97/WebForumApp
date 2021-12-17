@@ -48,24 +48,24 @@ public class MessageRepository {
   }
 
 
-  public Future<Message> findById(int id) {
+  public Future<List<Message>> findById(int id) {
     return client.preparedQuery("SELECT * FROM messages WHERE receiverId=?").execute(Tuple.of(id))
-      .map(RowSet::iterator)
-      .map(iterator -> {
-          if (iterator.hasNext()) {
-            return MAPPER.apply(iterator.next());
-          }
-          throw new RuntimeException("Messages not found for user with id" + id);
-        }
+      .onFailure(error->{
+        LOGGER.log(Level.INFO,error.getMessage());
+      })
+      .map(rs -> StreamSupport.stream(rs.spliterator(), false)
+        .map(MAPPER)
+        .collect(Collectors.toList())
       );
   }
 
   public Future<Integer> save(Message message) {
     LOGGER.log(Level.INFO, message.getContent()+ message.getReceiverId());
-    client.preparedQuery("INSERT INTO messages(message,date_sent,receiver_id,sender_id) VALUES (?,?,?)").execute(Tuple.of(message.getContent(), message.getDate(), message.getReceiverId(),message.getSenderId()),
+    client.preparedQuery("INSERT INTO messages(content,date,receiverId,senderId) VALUES (?,?,?,?)").execute(Tuple.of(message.getContent(), message.getDate(), message.getReceiverId(),message.getSenderId()),
         res -> {
       if (res.succeeded())
         LOGGER.log(Level.INFO,"Inserted new message");
+      else LOGGER.log(Level.INFO,res.cause().getMessage());
         });
 
     return client.query("select last_insert_id()").execute()

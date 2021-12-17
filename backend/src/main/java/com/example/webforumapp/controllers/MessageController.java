@@ -16,13 +16,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/message")
+@RequestMapping("/messages")
 public class MessageController {
 
     @Autowired
     private UserInfoService userInfoService;
     @Autowired
     private MessageService messageService;
+
+    @GetMapping("/{username}")
+    public ResponseEntity<String> getMessagesForUser(@PathVariable(value = "username") String username){
+      String result = messageService.getMessagesByUserName(username);
+      if(result != null){
+        return  new ResponseEntity<>(result, HttpStatus.OK);
+      } else return new ResponseEntity<>("Error",HttpStatus.BAD_REQUEST);
+
+    }
+
 
     @GetMapping
     public ResponseEntity<String> getMessages(@RequestBody Integer userId){
@@ -42,13 +52,17 @@ public class MessageController {
 
     @PostMapping
     public ResponseEntity<String> postMessage(@RequestBody MessageRequest request){
-        try {
+       /* try {
             if (messageService.sendMessage(request.getMessage(), request.getSenderName(), request.getReceiverName())){
                 return new ResponseEntity<>("Message Sent!", HttpStatus.OK);
             } else return new ResponseEntity<>("Couldn't send message", HttpStatus.BAD_REQUEST);
         } catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
+        }*/
+
+      if (messageService.sendMessage(request)){
+        return new ResponseEntity<>("Message Sent!",HttpStatus.OK);
+      } else return new ResponseEntity<>("Couldn't send message!",HttpStatus.BAD_REQUEST);
     }
 
 }

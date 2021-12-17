@@ -42,30 +42,34 @@ public class MainVerticle extends AbstractVerticle {
       "  PRIMARY KEY (`id`)\n" +
       ") ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\n").execute();
 
-    MessageRepository logRepository = MessageRepository.create(client);
+    MessageRepository messageRepository = MessageRepository.create(client);
 
-    MessageHandler logHandler = MessageHandler.create(logRepository,vertx);
+    MessageHandler messageHandler = MessageHandler.create(messageRepository,vertx);
 
     // Create a Router
     Router router = Router.router(vertx);
     // Mount the handler for all incoming requests at every path and HTTP method
 
-    router.get("/messages").produces("application/json").handler(logHandler::all);
-    router.post("/messages").consumes("application/json").handler(BodyHandler.create()).handler(logHandler::save);
-    router.get("/messages/:userId").produces("application/json").handler(logHandler::get);
+    router.get("/messages").produces("application/json").handler(messageHandler::all);
+    router.post("/messages").consumes("application/json").handler(BodyHandler.create()).handler(messageHandler::save);
+    router.get("/messages/:userId").produces("application/json").handler(messageHandler::get);
 
     // Create the HTTP server
     vertx.createHttpServer()
       // Handle every request using the router
       .requestHandler(router)
       // Start listening
-      .listen(8888)
+      .listen(8889)
       // Print the port
       .onSuccess(server ->
         System.out.println(
           "HTTP server started on port " + server.actualPort()
         )
-      );
+      ).onFailure(server ->{
+        System.out.println("Http server not started");
+        System.out.println(server.getMessage());
+      });
+
   }
 
 
